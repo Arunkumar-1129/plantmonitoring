@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾 AI Crop Diseases Solution - Smart Agricultural Health Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: #334155;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            background: #059669;
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .nav-link:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+
+        .user-info {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-text {
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .logout-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .logo-icon {
+            color: #059669;
+            margin-right: 0.5rem;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 3rem 2rem;
+        }
+
+        .search-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+        }
+
+        .search-title {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 1.1rem;
+            z-index: 3;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            transition: all 0.2s ease;
+            outline: none;
+            color: #334155;
+        }
+
+        input[type="text"]:focus {
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .search-btn:active {
+            transform: translateY(0);
+        }
+
+        .search-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .error {
+            color: #dc2626;
+            font-weight: 500;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: #fef2f2;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+            display: none;
+            font-size: 0.875rem;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .results {
+            margin-top: 2rem;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .results-title i {
+            color: #059669;
+            margin-right: 0.5rem;
+        }
+
+        .disease-info {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .disease-details {
+            text-align: center;
+        }
+
+        .disease-description {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .solution-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .solution-card.organic {
+            border-left: 4px solid #059669;
+        }
+
+        .solution-card.inorganic {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0;
+        }
+
+        .card-header i {
+            font-size: 1.1rem;
+            color: #059669;
+        }
+
+        .eco-badge, .chemical-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .eco-badge {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .chemical-badge {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .solution-gallery {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .solution-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .solution-item:hover {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .solution-content {
+            padding: 0;
+        }
+
+        .solution-text {
+            width: 100%;
+        }
+
+        .solution-title {
+            font-weight: 500;
+            color: #1e293b;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .solution-title i {
+            color: #059669;
+            font-size: 0.875rem;
+            margin-top: 0.125rem;
+            flex-shrink: 0;
+        }
+
+        .solution-details {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .effectiveness-badge, .application-info {
+            font-size: 0.75rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .effectiveness-badge {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+
+        .application-info {
+            background: #e0f2fe;
+            color: #0c4a6e;
+            border: 1px solid #bae6fd;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem 2rem 1rem;
+            }
+
+            .header {
+                padding: 1.5rem 0;
+            }
+
+            .nav-links, .user-info {
+                position: static;
+                justify-content: center;
+                margin-bottom: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .input-group {
+                min-width: auto;
+            }
+
+            .search-btn {
+                width: 100%;
+                margin-top: 0.75rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-section {
+                padding: 1.5rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="{% url 'plants:database' %}" class="nav-link">
+                <i class="fas fa-database"></i>View Database
+            </a>
+        </div>
+
+        <!-- User Info -->
+        <div class="user-info">
+            <span class="welcome-text">
+                <i class="fas fa-user"></i> Welcome, {{ user.first_name|default:user.username }}
+            </span>
+            <a href="{% url 'plants:logout' %}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>Logout
+            </a>
+        </div>
+
+        <div class="logo">
+            <span class="logo-icon">🌾</span>AI Crop Diseases Solution
+        </div>
+        <div class="subtitle">Smart Agricultural Health Platform</div>
+    </div>
+
+    <div class="container">
+        <div class="search-section">
+            <h2 class="search-title">
+                <i class="fas fa-search"></i> Crop Disease Diagnosis & Treatment
+            </h2>
+            <div class="search-box">
+                <div class="input-group">
+                    <i class="fas fa-leaf input-icon"></i>
+                    <input type="text" id="diseaseName" placeholder="Enter crop disease name (e.g. powdery mildew, blight, aphid)">
+                </div>
+                <button id="searchBtn" class="search-btn">
+                    <i class="fas fa-search"></i>Search
+                </button>
+            </div>
+            <div id="errorMsg" class="error"></div>
+        </div>
+
+        <div id="results" class="results" style="display: none;">
+            <div class="results-header">
+                <h2 class="results-title">
+                    <i class="fas fa-check-circle"></i> <span id="diseaseTitle"></span> Solutions
+                </h2>
+                <div class="disease-info">
+                    <div class="disease-details">
+                        <p id="diseaseDescription" class="disease-description"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solutions-grid">
+                <div class="solution-card organic">
+                    <div class="card-header">
+                        <h3><i class="fas fa-leaf"></i>Natural Solutions</h3>
+                        <span class="eco-badge">Organic</span>
+                    </div>
+                    <div id="organicSolutions" class="solution-gallery"></div>
+                </div>
+
+                <div class="solution-card inorganic">
+                    <div class="card-header">
+                        <h3><i class="fas fa-flask"></i>Chemical Solutions</h3>
+                        <span class="chemical-badge">Synthetic</span>
+                    </div>
+                    <div id="inorganicSolutions" class="solution-gallery"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        // Enhanced search functionality
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+        document.getElementById('diseaseName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            const disease = document.getElementById('diseaseName').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const results = document.getElementById('results');
+            const searchBtn = document.getElementById('searchBtn');
+
+            if (!disease) {
+                showError('Please enter a disease name');
+                return;
+            }
+
+            // Show loading state
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>Searching...';
+            searchBtn.disabled = true;
+            hideError();
+
+            fetch('/search/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ disease: disease.toLowerCase() })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Update disease information with animation
+                document.getElementById('diseaseTitle').textContent = data.disease.toUpperCase();
+                document.getElementById('diseaseDescription').textContent = data.description;
+
+                // Populate solutions with text only
+                populateSolutions('organicSolutions', data.solutions.organic);
+                populateSolutions('inorganicSolutions', data.solutions.inorganic);
+
+                // Show results with animation
+                results.style.display = 'block';
+                results.style.animation = 'slideUp 0.6s ease-out';
+
+                hideError();
+            })
+            .catch(error => {
+                showError(error.message);
+                results.style.display = 'none';
+            })
+            .finally(() => {
+                // Reset button state
+                searchBtn.innerHTML = '<i class="fas fa-search"></i>Search';
+                searchBtn.disabled = false;
+            });
+        }
+
+        function populateSolutions(elementId, solutions) {
+            const gallery = document.getElementById(elementId);
+            gallery.innerHTML = '';
+
+            solutions.forEach((solution, index) => {
+                const solutionItem = document.createElement('div');
+                solutionItem.className = 'solution-item';
+                solutionItem.style.animationDelay = (index * 0.1) + 's';
+
+                solutionItem.innerHTML = `
+                    <div class="solution-content">
+                        <div class="solution-text">
+                            <div class="solution-title">
+                                <i class="fas fa-check-circle"></i>
+                                ${solution.solution}
+                            </div>
+                            <div class="solution-details">
+                                <span class="effectiveness-badge">
+                                    <i class="fas fa-star"></i> ${solution.effectiveness}
+                                </span>
+                                <span class="application-info">
+                                    <i class="fas fa-info-circle"></i> ${solution.application}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                gallery.appendChild(solutionItem);
+            });
+        }
+
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMsg');
+
+            let friendlyMessage = message;
+            if (message.includes('Disease not found')) {
+                friendlyMessage = "Disease not found. Try: blight, rust, aphid, or powdery mildew";
+            } else if (message.includes('Please enter')) {
+                friendlyMessage = "Please enter a disease name";
+            }
+
+            errorMsg.textContent = friendlyMessage;
+            errorMsg.classList.add('show');
+        }
+
+        function hideError() {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.classList.remove('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+flask
+flask-cors
+pymongo
+flask-login
+flask-wtf
+werkzeug
+bcrypt
